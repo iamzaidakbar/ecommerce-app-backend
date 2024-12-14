@@ -5,8 +5,8 @@ import { AppError } from '../middleware/errorHandler';
 import env from '../config/env';
 import sendEmail from '../config/email';
 
-// Initialize Stripe
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+// Initialize Stripe with the correct configuration
+const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
   apiVersion: '2024-11-20.acacia'
 });
 
@@ -62,7 +62,7 @@ export const handleWebhook = async (req: Request, res: Response, next: NextFunct
 
     const event = stripe.webhooks.constructEvent(
       req.body,
-      sig || '',
+      sig,
       env.STRIPE_WEBHOOK_SECRET
     );
 

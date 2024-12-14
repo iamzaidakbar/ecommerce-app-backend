@@ -30,6 +30,10 @@ interface Environment {
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
   NEXT_PUBLIC_STRIPE_KEY: string;
+  BASE_URL: string;
+  PRODUCTION_URL: string;
+  STRIPE_WEBHOOK_ENDPOINT_LOCAL: string;
+  STRIPE_WEBHOOK_ENDPOINT_PROD: string;
 }
 
 // Validate required environment variables
@@ -97,6 +101,16 @@ export const env: Environment = {
   CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME || '',
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || '',
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || '',
+
+  // URLs
+  BASE_URL: process.env.NODE_ENV === 'production' 
+    ? (process.env.PRODUCTION_URL as string)
+    : (process.env.BASE_URL || 'http://localhost:4000'),
+  PRODUCTION_URL: process.env.PRODUCTION_URL as string || '',
+
+  // Stripe Webhooks
+  STRIPE_WEBHOOK_ENDPOINT_LOCAL: process.env.STRIPE_WEBHOOK_ENDPOINT_LOCAL || '/api/v1/payments/webhook',
+  STRIPE_WEBHOOK_ENDPOINT_PROD: process.env.STRIPE_WEBHOOK_ENDPOINT_PROD || '',
 };
 
 export default env;

@@ -6,7 +6,7 @@ Base URL
 
 All requests to the API start with this:
 
-http://localhost:4000/api/v1
+ecommerce-app-backend-gamma.vercel.app/api/v1
 
 How to Use the API
 
