@@ -56,15 +56,4 @@ app.get('/health', (_req, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
-// Root route
-app.get('/', (_req, res) => {
-  res.status(200).json({ 
-    message: 'Welcome to E-commerce API',
-    version: env.API_VERSION,
-    docs: '/api/v1/docs',
-    health: '/health'
-  });
-});
-
-
 export default app;

@@ -1,23 +1,17 @@
 import winston from 'winston';
-import env from './env';
 
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: winston.format.combine(
     winston.format.timestamp(),
-    winston.format.json(),
-    winston.format.metadata({ 
-      fillWith: ['environment', 'service', 'baseUrl'] 
-    })
+    winston.format.json()
   ),
-  defaultMeta: {
-    environment: env.NODE_ENV,
-    service: 'ecommerce-api',
-    baseUrl: env.BASE_URL
-  },
   transports: [
-    new winston.transports.Console()
-  ]
+    new winston.transports.Console({
+      format: winston.format.simple()
+    })
+  ],
+  // Remove file transports for serverless
 });
 
-export default logger;  // Export the logger 
+export default logger;

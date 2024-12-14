@@ -1,33 +1,13 @@
 import mongoose from 'mongoose';
 import env from './env';
-import winston from 'winston';
+import logger from './logger';
 
-// Configure logger
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
-  transports: [
-    new winston.transports.File({ filename: 'logs/db-error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'logs/db.log' })
-  ]
-});
-
-// Add console transport in development
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple()
-  }));
-}
-
-export const connectDB = async (): Promise<void> => {
+export const connectDB = async () => {
   try {
     const conn = await mongoose.connect(env.MONGODB_URI);
-    logger.info(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    logger.error('Error connecting to MongoDB:', error);
+    console.error('Error connecting to MongoDB:', error);
     process.exit(1);
   }
 };
