@@ -5,15 +5,12 @@ import { AppError } from '../middleware/errorHandler';
 import env from '../config/env';
 import sendEmail from '../config/email';
 
-const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-11-20.acacia',
+// Initialize Stripe
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+  apiVersion: '2024-11-20.acacia'
 });
 
-export const createPaymentIntent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const createPaymentIntent = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { orderId } = req.body;
     const order = await Order.findById(orderId).populate('user');
@@ -55,11 +52,7 @@ export const createPaymentIntent = async (
   }
 };
 
-export const handleWebhook = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const handleWebhook = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const sig = req.headers['stripe-signature'];
 
@@ -129,11 +122,7 @@ export const handleWebhook = async (
   }
 };
 
-export const getPaymentStatus = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getPaymentStatus = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { orderId } = req.params;
     const order = await Order.findById(orderId).select('paymentStatus paymentDetails');
@@ -154,11 +143,7 @@ export const getPaymentStatus = async (
   }
 };
 
-export const refundPayment = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const refundPayment = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { orderId } = req.params;
     const { reason } = req.body;

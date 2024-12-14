@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import path from 'path';
 
-// Load environment variables from .env file
-dotenv.config({ path: path.join(__dirname, '../../../.env') });
+// Update the path to look for .env in the backend folder
+dotenv.config({ path: path.join(__dirname, '../../.env') });
 
 interface Environment {
   NODE_ENV: string;
@@ -30,6 +30,27 @@ interface Environment {
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
   NEXT_PUBLIC_STRIPE_KEY: string;
+}
+
+// Validate required environment variables
+const requiredEnvVars = ['JWT_SECRET', 'MONGODB_URI', 'STRIPE_SECRET_KEY', 'STRIPE_WEBHOOK_SECRET'];
+
+// Only check required vars in production
+if (process.env.NODE_ENV === 'production') {
+  console.log('Checking required environment variables in production mode');
+  requiredEnvVars.forEach((envVar) => {
+    if (!process.env[envVar]) {
+      throw new Error(`Missing required environment variable: ${envVar}`);
+    }
+  });
+} else {
+  // In development, just log a warning if env vars are missing
+  console.log('Checking required environment variables in development mode');
+  requiredEnvVars.forEach((envVar) => {
+    if (!process.env[envVar]) {
+      console.warn(`Warning: Missing environment variable ${envVar} in development mode`);
+    }
+  });
 }
 
 export const env: Environment = {
@@ -77,14 +98,5 @@ export const env: Environment = {
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || '',
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || '',
 };
-
-// Validate required environment variables
-const requiredEnvVars = ['JWT_SECRET', 'MONGODB_URI'];
-
-requiredEnvVars.forEach((envVar) => {
-  if (!process.env[envVar]) {
-    throw new Error(`Missing required environment variable: ${envVar}`);
-  }
-});
 
 export default env;
