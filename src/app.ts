@@ -51,17 +51,20 @@ app.use(`/api/${apiVersion}/wishlist`, wishlistRoutes);
 app.use(`/api/${apiVersion}/payments`, paymentRoutes);
 app.use(`/api/${apiVersion}/cart`, cartRoutes);
 
-// Add catch-all route for undefined routes
-app.use('*', (_req, res) => {
-  res.status(404).json({
-    status: 'error',
-    message: 'Route not found'
-  });
-});
-
 // Health check endpoint
 app.get('/health', (_req, res) => {
   res.status(200).json({ status: 'ok' });
 });
+
+// Root route
+app.get('/', (_req, res) => {
+  res.status(200).json({ 
+    message: 'Welcome to E-commerce API',
+    version: env.API_VERSION,
+    docs: '/api/v1/docs',
+    health: '/health'
+  });
+});
+
 
 export default app;
