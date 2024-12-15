@@ -8,11 +8,11 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
+      "src": "/favicon.ico",
       "dest": "api/index.ts"
     },
     {
-      "src": "/health",
+      "src": "/api/(.*)",
       "dest": "api/index.ts"
     },
     {

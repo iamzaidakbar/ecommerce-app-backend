@@ -24,6 +24,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Favicon handler - Add this before other routes
+app.get('/favicon.ico', (_req, res) => {
+  // Option 1: If you have a favicon file in public folder
+  // res.sendFile(path.join(__dirname, '../public/favicon.ico'));
+
+  // Option 2: Return a base64 encoded favicon
+  res.writeHead(200, { 'Content-Type': 'image/x-icon' });
+  res.end(Buffer.from('AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFtbWwBbW1sAW1tbAFtbWwBbW1sAW1tbAFtbWwBbW1sAW1tbAFtbWwAAAAAAAAAAAAAAAAAAAAAAW1tbAFtbWyhbW1t/W1tblFtbW5RbW1uUW1tblFtbW5RbW1uUW1tbf1tbWyhbW1sAAAAAAAAAAAAAAAAAAAAAAFtbWyhbW1vUW1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW9RbW1soAAAAAAAAAAAAAAAAW1tbAFtbW39bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1t/W1tbAAAAAABbW1sAW1tbKFtbW9RbW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1vUW1tbKFtbWwBbW1sAW1tbf1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tbf1tbWwBbW1uUW1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tblFtbW5RbW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tblFtbW5RbW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tblFtbW5RbW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tblFtbWwBbW1t/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1t/W1tbAFtbWwBbW1soW1tb1FtbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW9RbW1soW1tbAFtbWwBbW1sAW1tbf1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW39bW1sAAAAAAAAAAAAAAAAAAAAAAFtbWyhbW1vUW1tb/1tbW/9bW1v/W1tb/1tbW/9bW1v/W1tb/1tbW9RbW1soAAAAAAAAAAAAAAAAAAAAAAAAAABbW1sAW1tbKFtbW39bW1uUW1tblFtbW5RbW1uUW1tblFtbW5RbW1t/W1tbKFtbWwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABbW1sAW1tbAFtbWwBbW1sAW1tbAFtbWwBbW1sAW1tbAFtbWwBbW1sAAAAAAAAAAAAAAAAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAA==', 'base64'));
+});
+
 // Move root route before other routes
 app.get('/', (_req, res) => {
   console.log('Root route hit');  // Add logging
